@@ -1,5 +1,5 @@
 import {defineStore} from 'pinia';
-import {MOCK_RECEPIES} from '@/constants/practices'
+import {MOCK_WORKOUTS} from '@/constants/practices'
 
 // Define the store
 export const usePracticesStore = defineStore('practices', {
@@ -7,14 +7,11 @@ export const usePracticesStore = defineStore('practices', {
     practices: [],
     isLoading: false,
   }),
-  // `actions` are functions for updating the state
   actions: {
-    fetchPractices() {  // mock practices
-      this.practices = MOCK_RECEPIES;
+    async fetchPractices() {
+      // Simulate an API call with a delay
+      await new Promise(resolve => setTimeout(resolve, 700)); // 700 ms delay
+      this.practices = MOCK_WORKOUTS;
     }
-  },
-  // `getters` are functions to derive state values
-  getters: {
-    // You can add getters if needed
   },
 });
