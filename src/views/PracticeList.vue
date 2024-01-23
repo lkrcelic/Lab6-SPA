@@ -1,52 +1,24 @@
 <template>
   <div>
     <h1>Practice List</h1>
+    <div v-if="isLoading">Loading...</div>
+    <div v-else>
+    <h3>Total Practices: {{ totalPractices }}</h3>
     <br>
 
-    <!-- Low-Intensity Practices Section -->
-    <section class="intensity-section">
-      <h2>Low Intensity Practices</h2>
-      <ul class="practice-list">
-        <li v-for="practice in practices['low-intensity']" :key="practice.id" class="practice-item">
-          <img :src="practice.imageUrl" alt="Picture of practice" class="practice-image">
-          <h3>{{ practice.title }}</h3>
-          <p>{{ practice.description }}</p>
-          <!-- Details like exercises and equipment can be shown here -->
-          <button @click="editPractice(practice.id)">Edit</button>
-          <button @click="deletePractice(practice.id)">Delete</button>
-        </li>
-      </ul>
-    </section>
-    <!-- Medium-Intensity Practices Section -->
-    <section class="intensity-section">
-      <h2>Medium Intensity Practices</h2>
-      <ul class="practice-list">
-        <li v-for="practice in practices['medium-intensity']" :key="practice.id" class="practice-item">
-          <img :src="practice.imageUrl" alt="Picture of practice" class="practice-image">
-          <h3>{{ practice.title }}</h3>
-          <p>{{ practice.description }}</p>
-          <!-- Details like exercises and equipment can be shown here -->
-          <button @click="editPractice(practice.id)">Edit</button>
-          <button @click="deletePractice(practice.id)">Delete</button>
-        </li>
-      </ul>
-    </section>
-
-    <!-- High-Intensity Practices Section -->
-    <section class="intensity-section">
-      <h2>High Intensity Practices</h2>
-      <ul class="practice-list">
-        <li v-for="practice in practices['high-intensity']" :key="practice.id" class="practice-item">
-          <div class="practice-background-image" :style="{ backgroundImage: backgroundStyle[practice.intensity] }">
-            <h3>{{ practice.title }}</h3>
-            <p>{{ practice.description }}</p>
-            <!-- Details like exercises and equipment can be shown here -->
-            <button @click="editPractice(practice.id)">Edit</button>
-            <button @click="deletePractice(practice.id)">Delete</button>
-          </div>
-        </li>
-      </ul>
-    </section>
+      <section v-for="(practiceType, intensity) in practices" :key="intensity" class="intensity-section">
+        <h2>{{ practiceType.title }}</h2>
+        <ul class="practice-list">
+          <li v-for="practice in practiceType.list" :key="practice.id" class="practice-item">
+            <div class="practice-background-image" :style="{ backgroundImage: backgroundStyle[intensity] }">
+              <h3>{{ practice.title }}</h3>
+              <p>{{ practice.description }}</p>
+              <button @click="editPractice(practice.id)">Details</button>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </div>
 
   </div>
 </template>
@@ -54,32 +26,42 @@
 
 <script>
 import {usePracticesStore} from '@/stores/practicesStore';
+import PracticeItem from '@/components/PracticeItem.vue';
 import highIntensityImage from '@/assets/images/high-intensity-flame.png';
 import mediumIntensityImage from '@/assets/images/medium-intensity-flame.png';
 import lowIntensityImage from '@/assets/images/low-intensity-flame.png';
-
-
+import {onMounted, ref} from "vue";
 
 export default {
   name: "PracticeList",
+  components: {
+    PracticeItem
+  },
+
+  setup() {
+    const store = usePracticesStore();
+    const practices = ref({})
+    const isLoading = ref(true);
+
+    onMounted(async () => {
+      await store.fetchPractices();
+      isLoading.value = false;
+      practices.value = store.practices
+    });
+
+    return {
+      practices,
+      isLoading
+    };
+  },
   data() {
     return {
       backgroundStyle: {
-        highIntensity: `url(${highIntensityImage})`,
-        mediumIntensity: `url(${mediumIntensityImage})`,
-        lowIntensity: `url(${lowIntensityImage})`,
+        highIntensityPractice: `url(${highIntensityImage})`,
+        mediumIntensityPractice: `url(${mediumIntensityImage})`,
+        lowIntensityPractice: `url(${lowIntensityImage})`,
       }
     }
-  }
-  setup() {
-    const store = usePracticesStore();
-
-    // Fetch practices when the component is created
-    store.fetchPractices();
-
-    return {
-      practices: store.practices
-    };
   },
   methods: {
     editPractice(id) {
@@ -89,6 +71,13 @@ export default {
       // Logic to delete the workout with the given id
     }
   },
+  computed: {
+    totalPractices() {
+      return Object.values(this.practices).reduce((total, practiceType) => {
+          return total + practiceType.list.length;
+      }, 0);
+    }
+  }
 };
 </script>
 
@@ -116,8 +105,14 @@ export default {
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 1rem;
+  color: #eeeeee;
 
-  color: #cccccc;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+}
+
+.practice-background-image:hover {
+  opacity: 1; /* Change to the desired opacity value on hover */
 }
 
 button {
