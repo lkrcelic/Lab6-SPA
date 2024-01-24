@@ -4,7 +4,7 @@
     <form @submit.prevent="addPractice">
       <div class="form-group">
         <label for="title">Title</label>
-        <input type="text" id="title" v-model="newPractice.title" required>
+        <input type="text" id="title" v-model="newPractice.title" required />
       </div>
 
       <div class="form-group">
@@ -14,12 +14,12 @@
 
       <div class="form-group">
         <label for="exercises">Exercises (comma-separated)</label>
-        <input type="text" id="exercises" v-model="exercisesInput">
+        <input type="text" id="exercises" v-model="exercisesInput" />
       </div>
 
       <div class="form-group">
         <label for="equipment">Equipment (comma-separated)</label>
-        <input type="text" id="equipment" v-model="equipmentInput">
+        <input type="text" id="equipment" v-model="equipmentInput" />
       </div>
 
       <div class="form-group">
@@ -36,52 +36,50 @@
   </div>
 </template>
 
-
 <script>
-import { ref } from 'vue';
-import {usePracticesStore} from "@/stores/practicesStore.js";
+import { ref } from 'vue'
+import { usePracticesStore } from '@/stores/practicesStore.js'
 
 export default {
   setup() {
-    const store = usePracticesStore();
+    const store = usePracticesStore()
 
     const newPractice = ref({
       id: 0,
       title: '',
       description: '',
-      intensity: 'low',
-    });
-    const exercisesInput = ref('');
-    const equipmentInput = ref('');
+      intensity: 'low'
+    })
+    const exercisesInput = ref('')
+    const equipmentInput = ref('')
 
     const addPractice = () => {
-      const exercises = exercisesInput.value.split(',').map(ex => ex.trim());
-      const equipment = equipmentInput.value.split(',').map(eq => eq.trim());
+      const exercises = exercisesInput.value.split(',').map((ex) => ex.trim())
+      const equipment = equipmentInput.value.split(',').map((eq) => eq.trim())
 
       const practice = {
         ...newPractice.value,
         exercises,
         equipment
-      };
+      }
 
-      store.addNewPractice(practice);
+      store.addNewPractice(practice)
 
       // Reset form
-      newPractice.value = { title: '', description: '', intensity: 'low' };
-      exercisesInput.value = '';
-      equipmentInput.value = '';
-    };
+      newPractice.value = { title: '', description: '', intensity: 'low' }
+      exercisesInput.value = ''
+      equipmentInput.value = ''
+    }
 
     return {
       newPractice,
       exercisesInput,
       equipmentInput,
       addPractice
-    };
+    }
   }
-};
+}
 </script>
-
 
 <style scoped>
 .add-practice {
@@ -99,7 +97,7 @@ label {
   margin-bottom: 0.5rem;
 }
 
-input[type="text"],
+input[type='text'],
 textarea,
 select {
   width: 100%;
