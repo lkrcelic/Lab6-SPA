@@ -11,13 +11,13 @@
 
 <script>
 export default {
-  name: "PracticeItem",
+  name: 'PracticeItem',
   props: {
     practice: Object,
-    backgroundStyle: String,
+    backgroundStyle: String
   },
   emits: ['details']
-};
+}
 </script>
 
 <style scoped>
@@ -58,7 +58,7 @@ button {
 }
 
 button:hover {
-  background-color: rgba(200, 200, 200, 0.5) ; /* Darker shade for hover state */
+  background-color: rgba(200, 200, 200, 0.5); /* Darker shade for hover state */
 }
 
 button:focus {

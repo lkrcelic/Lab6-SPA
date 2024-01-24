@@ -20,7 +20,7 @@
 
     <!-- Main Content Area -->
     <main>
-      <RouterView/>
+      <RouterView />
     </main>
   </div>
 </template>
@@ -28,5 +28,5 @@
 <script>
 export default {
   name: 'App'
-};
+}
 </script>

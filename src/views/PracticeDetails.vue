@@ -16,32 +16,35 @@
 </template>
 
 <script>
-import {usePracticesStore} from '@/stores/practicesStore';
-import {ref, watch} from 'vue';
-import {useRoute} from "vue-router";
+import { usePracticesStore } from '@/stores/practicesStore'
+import { ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 
 export default {
   setup() {
-    const route = useRoute();
-    const store = usePracticesStore();
-    const practice = ref(null);
-    const isLoading = ref(true);
+    const route = useRoute()
+    const store = usePracticesStore()
+    const practice = ref(null)
+    const isLoading = ref(true)
 
-    watch(() => route.params.id, async (newId) => {
-      isLoading.value = true;
-      await store.fetchPractices();
-      practice.value = store.getPracticeById(Number(newId));
-      isLoading.value = false;
-    }, {immediate: true});
+    watch(
+      () => route.params.id,
+      async (newId) => {
+        isLoading.value = true
+        await store.fetchPractices()
+        practice.value = store.getPracticeById(Number(newId))
+        isLoading.value = false
+      },
+      { immediate: true }
+    )
 
     return {
       practice,
       isLoading
-    };
-  },
-};
+    }
+  }
+}
 </script>
-
 
 <style scoped>
 .practice-details {
@@ -92,4 +95,3 @@ li {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 </style>
-
