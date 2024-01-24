@@ -56,7 +56,22 @@ export const MOCK_WORKOUTS =
           "equipment": ["kettlebell"],
           "intensity": "medium"
         },
-        // Add more medium-intensity practices here
+        {
+          "id": 8,
+          "title": "Circuit Training",
+          "description": "A circuit-style workout for overall fitness and endurance.",
+          "exercises": ["jumping jacks", "push-ups", "jump lunges", "bicycle crunches"],
+          "equipment": ["none"],
+          "intensity": "medium"
+        },
+        {
+          "id": 11,
+          "title": "Swimming Workout",
+          "description": "A full-body workout in the pool for cardiovascular health.",
+          "exercises": ["freestyle", "breaststroke", "backstroke"],
+          "equipment": ["swimsuit", "goggles"],
+          "intensity": "medium"
+        },
       ]
     },
     "highIntensityPractice": {
