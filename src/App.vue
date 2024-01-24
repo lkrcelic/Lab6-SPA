@@ -12,7 +12,7 @@
             <router-link to="/practices">Practices</router-link>
           </li>
           <li>
-            <router-link to="/edit-practice">Add Practice</router-link>
+            <router-link to="/practice/add">Add Practice</router-link>
           </li>
         </ul>
       </nav>

@@ -5,9 +5,9 @@
 
     <!-- Photo Gallery -->
     <div class="photo-gallery">
-      <img src="@/assets/images/CrniRizot.png" alt="Croatian Dish 1">
-      <img src="@/assets/images/Fritule.png" alt="Croatian Dish 2">
-      <img src="@/assets/images/Gregada.png" alt="Croatian Dish 3">
+      <img src="@/assets/images/image1.png" alt="Croatian Dish 1">
+      <img src="@/assets/images/image2.png" alt="Croatian Dish 2">
+      <img src="@/assets/images/image3.png" alt="Croatian Dish 3">
 
     </div>
 
